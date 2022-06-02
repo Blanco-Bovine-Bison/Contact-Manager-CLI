@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +33,46 @@ public class ContactManager {
 //         convert Contact to ArrayList
 //        add ArrayList contact to contacts.txt using .APPEND
 //
+    }
+
+    public static void searchFile() throws Exception {
+        // this ArrayList is adapted from https://stackoverflow.com/questions/5343689/java-reading-a-file-into-an-arraylist -JP
+        //We are creating a new array list using a scanner object that searches the file given in the file path input.
+        // "Sout"ing input prompt and created a new scanner to pull in information.
+        // grab the user input using the scanner and store it in a string variable
+        // iterate through each element in the arraylist codex and
+        // see if that element matches the user input we stored earlier using a conditional statement
+        // if it matches, system.out.println(result)
+        // if it doesn't match, continue through the for each loop until a match is found
+        //. The function is void because we are just printing to the console
+
+        Scanner s = new Scanner(new File("filepath"));
+        ArrayList<String> codex = new ArrayList<String>();
+        while (s.hasNextLine()){
+            codex.add(s.nextLine());
+        }
+        s.close();
+        System.out.println("Please provide a Name and/or Number to search our database.");
+        Scanner scanner = new Scanner(System.in);
+        String searchInput = scanner.nextLine();
+
+            // scan through database,
+
+        for (String arrayElement: codex) {
+
+            // if searchInput matches arrayElement
+
+        if (arrayElement == searchInput)   {
+
+            // and return those elements.
+
+            System.out.println(arrayElement);
+        }
+
+
+
+
+        }
     }
 
 //    public static void deleteContact() throws Exception {
