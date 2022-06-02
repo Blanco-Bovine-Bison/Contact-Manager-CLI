@@ -40,7 +40,7 @@ public class ContactsManagerApp {
                 break;
             case 3:
                 //                do something
-                ContactManager.deleteContact();
+//                ContactManager.deleteContact();
                 contactsManagerApp();
                 break;
             case 4:

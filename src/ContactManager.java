@@ -10,8 +10,8 @@ import static java.nio.file.Files.*;
 import static java.nio.file.Files.createFile;
 
 public class ContactManager {
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        addContact();
     }
 
     public static void addContact() throws Exception {
@@ -26,57 +26,56 @@ public class ContactManager {
 
         Contact newContact = new Contact(name, cell);
 
-        write(contacts, List.of(newContact.getName() + ", " + newContact.getCell()), StandardOpenOption.APPEND);
+        write(contacts, List.of(newContact.getName() + " || " + newContact.getCell()), StandardOpenOption.APPEND);
 //        store contacts.text into a ArrayList variable using File.read...etc
 //         convert Contact to ArrayList
 //        add ArrayList contact to contacts.txt using .APPEND
 //
     }
 
-    public static void deleteContact() throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        Path contacts = Paths.get("src", "contacts.txt");
-        System.out.println("Please enter the full name of the Contact to delete");
-        String name = scanner.nextLine();
-        File contactFinder = new File(String.valueOf(contacts));
-        Scanner contactList = new Scanner(contactFinder);
-        ArrayList<String> list = new ArrayList<>();
-//        try catch method of reading through a file
-        while (contactList.hasNextLine()) {
-            try {
-                int lineNum = 0;
-                list.add(contactList.nextLine());
-                System.out.println(list);
+//    public static void deleteContact() throws Exception {
+//        Scanner scanner = new Scanner(System.in);
+//        Path contacts = Paths.get("src", "contacts.txt");
+//        System.out.println("Please enter the full name of the Contact to delete");
+//        String name = scanner.nextLine();
+//        File contactFinder = new File(String.valueOf(contacts));
+//        Scanner contactList = new Scanner(contactFinder);
+//        ArrayList<String> list = new ArrayList<>();
+////        try catch method of reading through a file
+//        while (contactList.hasNextLine()) {
+//            try {
+//                int lineNum = 0;
+//                list.add(contactList.nextLine());
+//                System.out.println(list);
                 //            contactList.close();
                 //now read the file line by line...
                 //            int lineNum = 0;
-                String line = contactList.next();
-                lineNum++;
-                System.out.println("deleting line " + lineNum + " entry for " + name + ".");
+//                String line = contactList.next();
+//                lineNum++;
+//                System.out.println("deleting line " + lineNum + " entry for " + name + ".");
                 //                ArrayList<String> ogContacts = (ArrayList<String>) Files.readAllLines(contacts);
                 //                    ArrayList<String> modifyContacts = (ArrayList<String>) ogContacts;
-                int lineToRemove = lineNum - 1;
+//                int lineToRemove = lineNum - 1;
                 //                list.remove(lineToRemove);
-                if (contactFinder.delete()) {
-                    System.out.println("File deleted successfully");
-
-                }
-                else {
-                    System.out.println("Failed to overwrite file with new deltion/entry");
-                }
-                delete(contacts);
-                createFile(contacts);
-                FileWriter writer = new FileWriter(String.valueOf(contacts));
-                for (String str : list) {
-                    writer.write(str + System.lineSeparator());
-                    writer.close();
-                }
-            }
-            catch (NoSuchElementException | IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+//                if (contactFinder.delete()) {
+//                    System.out.println("File deleted successfully");
+//                }
+//                else {
+//                    System.out.println("Failed to overwrite file with new deletion/entry");
+//                }
+//                delete(contacts);
+//                createFile(contacts);
+//                FileWriter writer = new FileWriter(String.valueOf(contacts));
+//                for (String str : list) {
+//                    writer.write(str + System.lineSeparator());
+//                    writer.close();
+//                }
+//            }
+//            catch (NoSuchElementException | IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//    }
 
 //                    File newFile = new File();
 //                    System.out.println(newFile);
