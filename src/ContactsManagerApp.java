@@ -7,72 +7,75 @@ import java.util.Scanner;
 public class ContactsManagerApp {
     public static void main(String[] args) throws IOException {
 
-        String[] contactMenu = {
+
+        contactsManagerApp();
+    }
+    public static void contactsManagerApp() throws IOException {
+        String[] menu = {
                 "1- Add new contact",
                 "2- Search by Name",
                 "3- Delete by Name",
                 "4- Display All Contacts",
                 "5- Exit"
         };
-        contactsManagerApp(contactMenu);
-    }
-    public static void contactsManagerApp(String[] menu) throws IOException {
-        Path contacts = Paths.get("src", "contacts.txt");
+//        Path contacts = Paths.get("src", "contacts.txt");
 
 //        welcome message
 
 
         int option;
-        do {
-            option = displayOptions(menu);
-            switch (option) {
+        option = displayOptions(menu);
+        switch (option) {
 
-                case 1:
-                    //                do something
-                    contactsManagerApp(menu);
-                    break;
-                case 2:
-//                    addContact();
-                    //                do something
-                    contactsManagerApp(menu);
-                    break;
-                case 3:
-                    //                do something
-                    contactsManagerApp(menu);
-                    break;
-                case 4:
-                    System.out.println(readAllContacts(contacts));
-                    //                do something
-                    contactsManagerApp(menu);
-                    break;
-                case 5:
-                    //                do something
-                    break;
-                default:
-                    System.out.println("Please select a valid menu option and press enter/return using your keyboard");
-                    contactsManagerApp(menu);
-                    break;
-            }
-        } while (option != 5);
+            case 1:
+                //                    addContact();
+                //                do something
+                ContactManager.addContact();
+                contactsManagerApp();
+                break;
+            case 2:
+                //                do something
+
+                contactsManagerApp();
+                break;
+            case 3:
+                //                do something
+                ContactManager.deleteContact();
+                contactsManagerApp();
+                break;
+            case 4:
+                ContactManager.displayAllContacts();
+                //                do something
+                contactsManagerApp();
+                break;
+            case 5:
+                //                do something
+//                    exit th
+                return;
+            default:
+                System.out.println("Please select a valid menu option and press enter/return using your keyboard");
+                contactsManagerApp();
+                break;
+        }
     }
-
-    public static ArrayList<String> readAllContacts(Path filepath) throws FileNotFoundException, IOException {
-        File fp = new File(String.valueOf(filepath));
-        FileReader fr = new FileReader(fp);
-        BufferedReader br = new BufferedReader(fr);
-
-        ArrayList<String> lines = new ArrayList<>();
-        String line;
-        while((line = br.readLine()) != null) { lines.add(line); }
-
-        fr.close();
-        return lines;
-    }
+//  ========================================================================
+//    public static ArrayList<String> readAllContacts(Path filepath) throws FileNotFoundException, IOException {
+//        File fp = new File(String.valueOf(filepath));
+//        FileReader fr = new FileReader(fp);
+//        BufferedReader br = new BufferedReader(fr);
+//
+//        ArrayList<String> lines = new ArrayList<>();
+//        String line;
+//        while((line = br.readLine()) != null) { lines.add(line); }
+//
+//        fr.close();
+//        return lines;
+//    }
     //        while (option != 6) {
     //            displayOptions(contactMenu);
     //            option = scanner.nextInt();
-
-//        Menu format taken from https://computinglearner.com/how-to-create-a-java-console-menu-application/
+//  ======================================
+//        Menu format adapted from https://computinglearner.com/how-to-create-a-java-console-menu-application/
 
     private static int displayOptions(String[] contactMenu) {
             for (String menuItem : contactMenu){

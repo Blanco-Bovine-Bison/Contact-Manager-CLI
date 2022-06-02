@@ -3,13 +3,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.FileAttribute;
 import java.util.*;
 
+import static java.nio.file.Files.createFile;
+
 public class ContactManager {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) {
 
     }
-    public static void addContact(Path path) throws IOException {
+
+    public static void addContact() throws IOException {
 //        contacts.add(profile);
         Scanner scanner = new Scanner(System.in);
         Path contacts = Paths.get("src", "contacts.txt");
@@ -21,40 +25,87 @@ public class ContactManager {
 
         Contact newContact = new Contact(name, cell);
 
-        Files.write(path, List.of(newContact.getName() + ", " + newContact.getCell()), StandardOpenOption.APPEND);
+        Files.write(contacts, List.of(newContact.getName() + ", " + newContact.getCell()), StandardOpenOption.APPEND);
 //        store contacts.text into a ArrayList variable using File.read...etc
 //         convert Contact to ArrayList
 //        add ArrayList contact to contacts.txt using .APPEND
 //
-
     }
-    public static void deleteContact() throws IOException{
+
+    public static void deleteContact() throws NoSuchElementException{
         Scanner scanner = new Scanner(System.in);
         Path contacts = Paths.get("src", "contacts.txt");
-
-        System.out.println("Please enter the name of the Contact to delete");
+        System.out.println("Please enter the full name of the Contact to delete");
         String name = scanner.nextLine();
 //        try catch method of reading through a file
         try {
-            Scanner contactFinder = new Scanner(contacts);
-
-            //now read the file line by line...
+            File contactFinder = new File(String.valueOf(contacts));
+            Scanner contactList = new Scanner(contactFinder);
+            ArrayList<String> list = new ArrayList<>();
             int lineNum = 0;
-            while (contactFinder.hasNextLine()) {
-                String line = contactFinder.nextLine();
-                lineNum++;
-                if(line.toUpperCase().contains(name.toUpperCase())) {
-                    System.out.println("deleting line " + lineNum + " entry for person " );
+            for (element: list) {
+                list.add(contactList.nextLine());
+            }
+            System.out.println(list);
+//            contactList.close();
+            //now read the file line by line...
+//            int lineNum = 0;
+            String line = contactList.next();
+            lineNum++;
+                System.out.println("deleting line " + lineNum + " entry for " + name + ".");
+//                ArrayList<String> ogContacts = (ArrayList<String>) Files.readAllLines(contacts);
+//                    ArrayList<String> modifyContacts = (ArrayList<String>) ogContacts;
+                int lineToRemove = lineNum - 1;
+//                list.remove(lineToRemove);
+                if (contactFinder.delete()) {
+                    System.out.println("File deleted successfully");
+
+                } else {
+                    System.out.println("Failed to overwrite file with new deltion/entry");
+                }
+                Files.delete(contacts);
+                Files.createFile(contacts);
+                FileWriter writer = new FileWriter(String.valueOf(contacts));
+                for (String str : list) {
+                    writer.write(str + System.lineSeparator());
+                    writer.close();
                 }
             }
-        } catch (IOException e) {
+        } catch (NoSuchElementException | IOException e) {
             e.printStackTrace();
         }
-
-
-        Files.read(contacts, StandardOpenOption.READ);
     }
-//    public static List readAllContacts() {
+
+//                    File newFile = new File();
+//                    System.out.println(newFile);
+//                    Files.createFile(contacts,
+//                            (FileAttribute<?>) newFile,
+//                            StandardOpenOption.WRITE);
+
+//                    found filewriter example to delete and rewrite file at following website
+//                    https://stackoverflow.com/questions/13729625/overwriting-txt-file-in-java
+//                    File fold = new File(String.valueOf(contacts));
+//                    fold.delete();
+
+//                    File fnew = new File(String.valueOf(contacts));
+
+//                    String source = textArea.getText();
+//                    System.out.println(source);
+
+
+
+
+    public static void displayAllContacts() throws IOException {
+//        Scanner scanner = new Scanner(System.in);
+        Path contacts = Paths.get("src", "contacts.txt");
+        ArrayList<String> existingContacts = (ArrayList<String>) Files.readAllLines(contacts);
+        for (String contact : existingContacts) {
+            System.out.println(contact);
+        }
+    }
+}
+//        System.out.println("Please enter the full name of the Contact to delete");
+//        String name = scanner.nextLine();
 
 //        return contacts;
 //    }
@@ -71,4 +122,3 @@ public class ContactManager {
 //    public static List patialMatches(String cellOrNamePart) {
 //
 //    }
-}
