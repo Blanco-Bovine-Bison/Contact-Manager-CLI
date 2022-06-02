@@ -6,6 +6,7 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.FileAttribute;
 import java.util.*;
 
+import static java.nio.file.Files.*;
 import static java.nio.file.Files.createFile;
 
 public class ContactManager {
@@ -13,7 +14,7 @@ public class ContactManager {
 
     }
 
-    public static void addContact() throws IOException {
+    public static void addContact() throws Exception {
 //        contacts.add(profile);
         Scanner scanner = new Scanner(System.in);
         Path contacts = Paths.get("src", "contacts.txt");
@@ -25,54 +26,55 @@ public class ContactManager {
 
         Contact newContact = new Contact(name, cell);
 
-        Files.write(contacts, List.of(newContact.getName() + ", " + newContact.getCell()), StandardOpenOption.APPEND);
+        write(contacts, List.of(newContact.getName() + ", " + newContact.getCell()), StandardOpenOption.APPEND);
 //        store contacts.text into a ArrayList variable using File.read...etc
 //         convert Contact to ArrayList
 //        add ArrayList contact to contacts.txt using .APPEND
 //
     }
 
-    public static void deleteContact() throws NoSuchElementException{
+    public static void deleteContact() throws Exception {
         Scanner scanner = new Scanner(System.in);
         Path contacts = Paths.get("src", "contacts.txt");
         System.out.println("Please enter the full name of the Contact to delete");
         String name = scanner.nextLine();
+        File contactFinder = new File(String.valueOf(contacts));
+        Scanner contactList = new Scanner(contactFinder);
+        ArrayList<String> list = new ArrayList<>();
 //        try catch method of reading through a file
-        try {
-            File contactFinder = new File(String.valueOf(contacts));
-            Scanner contactList = new Scanner(contactFinder);
-            ArrayList<String> list = new ArrayList<>();
-            int lineNum = 0;
-            for (element: list) {
+        while (contactList.hasNextLine()) {
+            try {
+                int lineNum = 0;
                 list.add(contactList.nextLine());
-            }
-            System.out.println(list);
-//            contactList.close();
-            //now read the file line by line...
-//            int lineNum = 0;
-            String line = contactList.next();
-            lineNum++;
+                System.out.println(list);
+                //            contactList.close();
+                //now read the file line by line...
+                //            int lineNum = 0;
+                String line = contactList.next();
+                lineNum++;
                 System.out.println("deleting line " + lineNum + " entry for " + name + ".");
-//                ArrayList<String> ogContacts = (ArrayList<String>) Files.readAllLines(contacts);
-//                    ArrayList<String> modifyContacts = (ArrayList<String>) ogContacts;
+                //                ArrayList<String> ogContacts = (ArrayList<String>) Files.readAllLines(contacts);
+                //                    ArrayList<String> modifyContacts = (ArrayList<String>) ogContacts;
                 int lineToRemove = lineNum - 1;
-//                list.remove(lineToRemove);
+                //                list.remove(lineToRemove);
                 if (contactFinder.delete()) {
                     System.out.println("File deleted successfully");
 
-                } else {
+                }
+                else {
                     System.out.println("Failed to overwrite file with new deltion/entry");
                 }
-                Files.delete(contacts);
-                Files.createFile(contacts);
+                delete(contacts);
+                createFile(contacts);
                 FileWriter writer = new FileWriter(String.valueOf(contacts));
                 for (String str : list) {
                     writer.write(str + System.lineSeparator());
                     writer.close();
                 }
             }
-        } catch (NoSuchElementException | IOException e) {
-            e.printStackTrace();
+            catch (NoSuchElementException | IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -93,12 +95,10 @@ public class ContactManager {
 //                    System.out.println(source);
 
 
-
-
-    public static void displayAllContacts() throws IOException {
+    public static void displayAllContacts() throws Exception {
 //        Scanner scanner = new Scanner(System.in);
         Path contacts = Paths.get("src", "contacts.txt");
-        ArrayList<String> existingContacts = (ArrayList<String>) Files.readAllLines(contacts);
+        ArrayList<String> existingContacts = (ArrayList<String>) readAllLines(contacts);
         for (String contact : existingContacts) {
             System.out.println(contact);
         }

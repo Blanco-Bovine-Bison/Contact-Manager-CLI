@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ContactsManagerApp {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
 
         contactsManagerApp();
     }
-    public static void contactsManagerApp() throws IOException {
+    public static void contactsManagerApp() throws Exception {
         String[] menu = {
                 "1- Add new contact",
                 "2- Search by Name",
