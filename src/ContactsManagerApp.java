@@ -8,6 +8,10 @@ public class ContactsManagerApp {
     public static void main(String[] args) throws Exception {
 
 
+
+
+
+
         contactsManagerApp();
     }
     public static void contactsManagerApp() throws Exception {
@@ -34,11 +38,13 @@ public class ContactsManagerApp {
                 contactsManagerApp();
                 break;
             case 2:
+                ContactManager.searchFile();
                 //                do something
 
                 contactsManagerApp();
                 break;
             case 3:
+                ContactManager.deleteContact();
                 //                do something
 //                ContactManager.deleteContact();
                 contactsManagerApp();
