@@ -15,7 +15,7 @@ public class ContactManager {
     public static void main(String[] args) throws Exception {
 //        addContact();
 //        searchFile();
-        deleteContact();
+//        deleteContact();
     }
 
     public static void addContact() throws Exception {
